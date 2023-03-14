@@ -1,0 +1,26 @@
+service: my-service
+provider:
+  name: aws
+  runtime: python3.8
+  region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - rds-db:*
+      Resource: arn:aws:rds-db:eu-west-1:287820185021:db:dm-db
+    - Effect: Allow
+      Action:
+        - sns:*
+      Resource: arn:aws:sns:eu-west-1:287820185021:openaq-pegah
+functions:
+  my-function:
+    handler: main.lambda_handler
+    events:
+      - sns:
+          arn: arn:aws:sns:eu-west-1:287820185021:openaq-pegah
+    environment:
+      DB_HOST: terraform-20230314091851500500000001.cnyif0bzxpjl.eu-west-1.rds.amazonaws.com
+      DB_PORT: 5432
+      DB_USER: peggy
+      DB_PASS: dmopenaq
+      DB_NAME: air_pollution
