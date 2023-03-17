@@ -1,0 +1,4 @@
+pytz
+timezonefinder
+psycopg2-binary
+numpy

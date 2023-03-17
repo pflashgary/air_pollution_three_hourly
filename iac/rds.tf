@@ -36,6 +36,8 @@ resource "aws_db_instance" "dm" {
 
   db_subnet_group_name = aws_db_subnet_group.dm.name
 
+  publicly_accessible = true
+
   tags = {
     Name = "dm-db"
   }
