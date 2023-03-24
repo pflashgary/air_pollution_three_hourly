@@ -1,4 +1,4 @@
-# Real time air pollution monitoring
+# [Real time air pollution monitoring](https://github.com/pflashgary/air_pollution_three_hourly)
 In this project, we aim to provide a real-time view of air quality in different cities of Belgium by tapping into the openaq dataset. Our goal is to ingest and process the data from the SNS topic, calculate the average of measurements over the last 3 hours, and store the results in a database. Additionally, we would like to visualize the data.
 
 ## Methodology
@@ -121,19 +121,19 @@ FROM (
 ) AS subquery
 GROUP BY city;
 ```
+|          city           | num_stations |
+|------------------------|-------------|
+| Luxembourg             |            4 |
+| Brussels-Capital Region|           10 |
+| Oost-Vlaanderen        |           16 |
+| Limburg                |            4 |
+| Hainaut                |            7 |
+| Antwerpen              |           20 |
+| Namur                  |            3 |
+| West-Vlaanderen        |           10 |
+| Vlaams-Brabant         |            7 |
+| Liege                  |            8 |
 
-          city           | num_stations
--------------------------+--------------
- Luxembourg              |            4
- Brussels-Capital Region |           10
- Oost-Vlaanderen         |           16
- Limburg                 |            4
- Hainaut                 |            7
- Antwerpen               |           20
- Namur                   |            3
- West-Vlaanderen         |           10
- Vlaams-Brabant          |            7
- Liege                   |            8
 
 
 - Number of parameters for each station
@@ -144,56 +144,33 @@ FROM hourly
 GROUP BY city, latitude, longitude;
 
 ```
+city           |     latitude     |    longitude     |          parameters
+-------------------------|------------------|------------------|------------------------------
+ Antwerpen               | 51.092 | 4.3801 | pm10, pm25
+ Antwerpen               | 51.120 | 5.0215 | no2
+ Antwerpen               | 51.170 | 4.3410 | pm10, pm25, so2
+ Antwerpen               | 51.177 | 4.4179 | no2, pm10, pm25
+ Antwerpen               | 51.192 | 5.2215 | so2
+ Antwerpen               | 51.208 | 4.4215 | no2, pm10, pm25
+ Antwerpen               | 51.209 | 4.431  | no2, pm10, pm25
+ Antwerpen               | 51.209 | 4.431  | no2, o3, pm10, pm25
+ Antwerpen               | 51.214 | 4.3322 | no2
+ Antwerpen               | 51.228 | 4.4284 | no2, pm10, pm25
+ Antwerpen               | 51.233 | 5.1639 | no2, o3, pm10, pm25
+ Antwerpen               | 51.236 | 4.385  | pm10, pm25
+ Antwerpen               | 51.250 | 4.342  | no2, so2
+ Antwerpen               | 51.252 | 4.491  | no2, o3, pm10, pm25
+ Antwerpen               | 51.255 | 4.3853 | no2, so2
+ Antwerpen               | 51.260 | 4.4243 | no2, pm10, pm25
+ Antwerpen               | 51.264 | 4.3412 | no2, so2
+ Antwerpen               | 51.313 | 4.4038 | pm10, pm25
+ Antwerpen               | 51.320 | 4.4448 | no2
+ Antwerpen               | 51.348 | 4.3397 | no2, o3
+ Brussels-Capital Region | 50.796 | 4.358  | no2, o3, pm10, pm25, so2
+ Brussels-Capital Region | 50.811 | 4.328  | no2
+ Brussels-Capital Region | 50.825 | 4.384  | no2
+ Brussels-Capital Region | 50.838 | 4.374  | co, no2
 
-         city           |     latitude     |    longitude     |          parameters
--------------------------+------------------+------------------+------------------------------
- Antwerpen               | 51.0920000379014 | 4.38010354488249 | pm10, pm25
- Antwerpen               | 51.1203841374963 | 5.02154597760984 | no2
- Antwerpen               | 51.1702980388321 | 4.34100506456284 | pm10, pm25, so2
- Antwerpen               | 51.1771308881904 | 4.41794863777773 | no2, pm10, pm25
- Antwerpen               | 51.1928003335933 | 5.22153407909309 | so2
- Antwerpen               | 51.2082294722138 | 4.42155925106527 | no2, pm10, pm25
- Antwerpen               |   51.20951873198 | 4.43179223079244 | no2, pm10, pm25
- Antwerpen               |        51.209663 |         4.431821 | no2, o3, pm10, pm25
- Antwerpen               | 51.2146988167721 | 4.33220643231032 | no2
- Antwerpen               | 51.2286298134603 | 4.42845417753557 | no2, pm10, pm25
- Antwerpen               | 51.2336522065588 | 5.16397884633176 | no2, o3, pm10, pm25
- Antwerpen               |  51.236194200299 | 4.38522368445472 | pm10, pm25
- Antwerpen               | 51.2501064987036 | 4.34210451132214 | no2, so2
- Antwerpen               |        51.252103 |         4.491362 | no2, o3, pm10, pm25
- Antwerpen               | 51.2558066447111 | 4.38535982604938 | no2, so2
- Antwerpen               | 51.2609897078635 | 4.42439900693533 | no2, pm10, pm25
- Antwerpen               | 51.2642897846451 | 4.34127999246466 | no2, so2
- Antwerpen               | 51.3139288945411 | 4.40386813974961 | pm10, pm25
- Antwerpen               | 51.3204167857085 | 4.44481061898005 | no2
- Antwerpen               | 51.3487952923282 | 4.33970994711987 | no2, o3
- Brussels-Capital Region |        50.796632 |         4.358539 | no2, o3, pm10, pm25, so2
- Brussels-Capital Region | 50.8117008944185 | 4.32838466510102 | no2
- Brussels-Capital Region |        50.825128 |         4.384719 | no2
- Brussels-Capital Region | 50.8386311880319 | 4.37438828335274 | co, no2
- Brussels-Capital Region | 50.8407885668979 | 4.37614906974903 | co, no2
- Brussels-Capital Region |        50.849665 |          4.33382 | co, no2, o3, pm10, pm25, so2
- Brussels-Capital Region | 50.8508105371924 | 4.34858747427388 | co, no2
- Brussels-Capital Region | 50.8580305936746 |  4.2883363663059 | no2, o3, pm10, pm25
- Brussels-Capital Region | 50.8835598117798 | 4.38296325180234 | co, no2, o3, pm10, pm25, so2
- Brussels-Capital Region |        50.895101 |         4.392718 | no2, o3, pm10, pm25
- Hainaut                 |        50.377592 |           4.4247 | pm10, pm25
- Hainaut                 | 50.4078101998156 | 4.39589711703924 | co, no2, pm10, pm25, so2
- Hainaut                 |        50.409311 |         4.452172 | co, no2, pm10, pm25
- Hainaut                 | 50.4164333599369 | 4.52113020813044 | pm10, pm25, so2
- Hainaut                 |        50.428995 |         4.458681 | no2, o3, pm10, pm25
- Hainaut                 | 50.4651921568256 | 3.93971432552384 | co, no2, o3, pm10, pm25
- Hainaut                 | 50.6167184021922 | 3.45762442718173 | co, no2, o3, pm10, pm25, so2
- Liege                   |        50.583614 |         5.397446 | no2, o3, pm10, pm25, so2
- Liege                   | 50.6119227069516 | 5.61114976281943 | pm10, pm25
- Liege                   | 50.6122775285323 | 5.99275271918705 | pm10, pm25
- Liege                   |        50.613413 |         5.570223 | co, no2, o3, pm10, pm25, so2
- Liege                   |        50.620671 |         5.516405 | co, no2, pm10, pm25, so2
- Liege                   |        50.624992 |         5.547464 | pm10, pm25
- Liege                   | 50.6288602602161 | 6.00232868693696 | no2, o3, so2
- Liege                   |        50.658444 |         5.627835 | no2, o3, pm10, pm25
- Limburg                 | 50.7117060941316 | 5.10315860945395 | no2, o3, pm10, pm25
- Limburg                 | 50.8822988262256 | 5.61887398523951 | no2, o3
 
 - Missing hours
 
@@ -222,71 +199,31 @@ LEFT JOIN hourly ON all_hours.hour = date_trunc('hour', hourly.date_local)
 WHERE hourly.date_local IS NULL;
 
 399
+
+hour
+---------------------
+2023-03-04 14:00:00
+2023-03-04 15:00:00
+2023-03-04 16:00:00
+2023-03-04 17:00:00
+2023-03-04 18:00:00
+..
+..
+
 ```
 
-        hour
----------------------
- 2023-03-04 14:00:00
- 2023-03-04 15:00:00
- 2023-03-04 16:00:00
- 2023-03-04 17:00:00
- 2023-03-04 18:00:00
- 2023-03-04 19:00:00
- 2023-03-04 20:00:00
- 2023-03-04 21:00:00
- 2023-03-04 22:00:00
- 2023-03-04 23:00:00
- 2023-03-05 00:00:00
- 2023-03-05 01:00:00
- 2023-03-05 16:00:00
- 2023-03-05 17:00:00
- 2023-03-05 18:00:00
- 2023-03-05 19:00:00
- 2023-03-05 20:00:00
- 2023-03-05 21:00:00
- 2023-03-05 22:00:00
- 2023-03-05 23:00:00
- 2023-03-06 00:00:00
- 2023-03-06 01:00:00
- 2023-03-06 02:00:00
- 2023-03-06 03:00:00
- 2023-03-06 04:00:00
- 2023-03-06 05:00:00
- 2023-03-06 06:00:00
- 2023-03-06 07:00:00
- 2023-03-06 08:00:00
- 2023-03-06 09:00:00
- 2023-03-06 10:00:00
- 2023-03-06 11:00:00
- 2023-03-06 12:00:00
- 2023-03-06 13:00:00
- 2023-03-06 14:00:00
- 2023-03-06 15:00:00
- 2023-03-06 16:00:00
- 2023-03-06 17:00:00
- 2023-03-06 18:00:00
- 2023-03-06 19:00:00
- 2023-03-06 20:00:00
- 2023-03-06 21:00:00
- 2023-03-06 22:00:00
- 2023-03-06 23:00:00
- 2023-03-07 00:00:00
- 2023-03-07 01:00:00
- 2023-03-07 02:00:00
-:
-:
+
+
 
 - Delay
 
 At 9:00 am today:
 
 ```sql
-SELECT MAX(date_local) fROM HOURLY;
-```
-         max
----------------------
- 2023-03-24 02:00:00
+SELECT MAX(date_local) FROM HOURLY;
+max: 2023-03-24 02:00:00
 
+```
 
  ## Future Directions
  - Our results demonstrate the technical feasibility of the approach.
